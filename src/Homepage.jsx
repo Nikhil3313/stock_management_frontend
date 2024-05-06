@@ -19,7 +19,8 @@ function Homepage() {
 
 
   const changeHandler = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
+    if (!isNaN(value) && parseFloat(value) >= 0)
     setData({
       ...data,
       [name]: value
@@ -42,9 +43,11 @@ function Homepage() {
         console.log(err)
       })
   }, [])
+
+  
   const getData = () => {
     axios
-      .get("http://localhost:5000/api/products/getProducts")
+      .get("http://localhost:5000/api/stock")
       .then((res) => {
         // console.log(12122, res.data)
         setModifiedData(res.data)
@@ -67,14 +70,25 @@ function Homepage() {
   }
 
   const viewForm = () => {
-    setPopup(!popup)
+    setData(
+      {
+        name: "",
+        price: "",
+        quantity: "",
+        unit: "",
+        type: "Damage",
+        sku: ""
+      }
+    )
+    setSelectedOption(null)
+    getData()
+    setPopup(!popup);    
   }
 
 
   const ModifyStock = (data) => {
-    console.log(":data", data)
-    
-      axios.post("http://localhost:5000/api/products/modifyStock", data).then((res) => {
+          
+      axios.post("http://localhost:5000/api/stock/add", data).then((res) => {
         console.log("res", res.data.data)
         setPopup(!popup)
         setData(
@@ -83,7 +97,7 @@ function Homepage() {
             price: "",
             quantity: "",
             unit: "",
-            type: "damage",
+            type: "Damage",
             sku: ""
           }
         )
@@ -126,11 +140,11 @@ function Homepage() {
     });
     const foundProduct = userData.find(data=>data.sku==item.sku)
     setSelectedOption({ label: foundProduct.name, value: foundProduct.mrp, sku: foundProduct.sku })
-  
+   
 };
 
 const deleteProduct = (productId) => {
-  axios.delete(`http://localhost:5000/api/products/${productId}`)
+  axios.delete(`http://localhost:5000/api/stock/${productId}`)
       .then((res) => {
           console.log("Product deleted successfully:", res.data);
           getData();
@@ -139,6 +153,7 @@ const deleteProduct = (productId) => {
           console.error("Error deleting product:", err);
       });
 };
+
 
   
   return (
@@ -208,14 +223,14 @@ const deleteProduct = (productId) => {
                     </div>
                     <div className='flex flex-col w-[45%] gap-[20px]'>
                       <p className='font-[500]'>Quantity</p>
-                      <input type="text" placeholder='Enter Quantity' name='quantity' value={data.quantity} onChange={changeHandler} className='border-[1px] px-[10px] py-[5px] rounded-[5px]' />
+                      <input type="number" placeholder='Enter Quantity' name='quantity' value={data.quantity} onChange={changeHandler} className='border-[1px] px-[10px] py-[5px] rounded-[5px]' />
                     </div>
                   </div>
 
                   <div className='W-[100%] flex min-gap-[10%] flex-row justify-between'>
                     <div className='flex flex-col w-[45%] gap-[20px]'>
                       <p className='font-[500]'>Unit</p>
-                      <input type="text" placeholder='Enter Unit' name='unit' onChange={changeHandler} value={data.unit} className='border-[1px] px-[10px] py-[5px] rounded-[5px]' />
+                      <input type="number" placeholder='Enter Unit' name='unit' onChange={changeHandler} value={data.unit} className='border-[1px] px-[10px] py-[5px] rounded-[5px]' />
                     </div>
                     <div className='flex flex-col w-[45%] gap-[20px]'>
                       <p className='font-[500]'>Type</p>
