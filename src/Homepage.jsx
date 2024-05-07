@@ -20,7 +20,7 @@ function Homepage() {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    if (!isNaN(value) && parseFloat(value) >= 0)
+    if (value >= 0)
     setData({
       ...data,
       [name]: value
