@@ -165,7 +165,7 @@ function Homepage() {
   const [selectedOptions, setSelectedOptions] = useState('');
   const [selectedFilterOption, setSelectedFilterOptions] = useState('')
 
-  const options = ["Quantity", "Unit", "Price", "Time"];
+  const options = ["Quantity", "Price", "Time"];
   const filterOptions = ["All", "Damage", "Loose"];
 
   const handleFilterOption = (filterOptions) => {
