@@ -241,7 +241,7 @@ function Homepage() {
             </button>
             <button className="relative font-semibold border border-gray-400 py-2 px-4 rounded-[5px] " onClick={() => setfilterIsOpen(!filterisOpen)}> {selectedFilterOption ? selectedFilterOption : "Filter By"}
               {filterisOpen && (
-                <div ref={taskRef} className="absolute z-10 mt-3 bg-white border border-gray-300 rounded">
+                <div ref={taskRef} className="absolute z-10 mt-3 left-[0] bg-white border border-gray-300 rounded">
                   {filterOptions.map((option, index) => (
                     <div key={index} className="py-1 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handleFilterOption(option)}>{option}</div>
                   ))}
