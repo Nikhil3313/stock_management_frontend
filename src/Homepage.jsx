@@ -20,29 +20,29 @@ function Homepage() {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-      setData({
-        ...data,
-        [name]: value
-      })
+    setData({
+      ...data,
+      [name]: value
+    })
   }
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-      if (!selectedOption) {
-        alert("Please select a product");
-        return;
-      }
-      if (!data.quantity.trim() || isNaN(data.quantity) || parseInt(data.quantity) <= 0) {
-        alert("Please enter a valid quantity");
-        return;
-      }
-      ModifyStock(data)
+    if (!selectedOption) {
+      alert("Please select a product");
+      return;
     }
+    if (!data.quantity.trim() || isNaN(data.quantity) || parseInt(data.quantity) <= 0) {
+      alert("Please enter a valid quantity");
+      return;
+    }
+    ModifyStock(data)
+  }
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products/getAll")
+      .get("https://freedygoservices.in/api/products/getAll")
       .then((res) => {
         setuserData(res.data);
       })
@@ -54,7 +54,7 @@ function Homepage() {
 
   const getData = () => {
     axios
-      .get("http://localhost:5000/api/stock")
+      .get("https://freedygoservices.in/api/stock")
       .then((res) => {
         // console.log(12122, res.data)
         setModifiedData(res.data)
@@ -95,7 +95,7 @@ function Homepage() {
 
   const ModifyStock = (data) => {
 
-    axios.post("http://localhost:5000/api/stock/add", data).then((res) => {
+    axios.post("https://freedygoservices.in/api/stock/add", data).then((res) => {
       console.log("res", res.data.data)
       setPopup(!popup)
       setData(
@@ -151,7 +151,7 @@ function Homepage() {
   };
 
   const deleteProduct = (productId) => {
-    axios.delete(`http://localhost:5000/api/stock/${productId}`)
+    axios.delete(`https://freedygoservices.in/api/stock/${productId}`)
       .then((res) => {
         console.log("Product deleted successfully:", res.data);
         getData();
@@ -184,7 +184,7 @@ function Homepage() {
     .sort((a, b) => {
       if (selectedOptions === 'Quantity') {
         return a.quantity - b.quantity;
-      }  else if (selectedOptions === 'Price') {
+      } else if (selectedOptions === 'Price') {
         return a.price - b.price;
       }
       else if (selectedOptions === 'Time') {
@@ -226,8 +226,8 @@ function Homepage() {
 
   return (
     <>
-      <div className="p-5 flex flex-col gap-6 w-[100%]">
-        <div className="flex flex-row font-[600] justify-between">
+      <div className=" flex flex-col  bg-[white]  w-[100%]">
+        <div className="p-4 flex flex-row font-[600] border-t-[1px] border-solid  justify-between bg-[white] sticky top-[0px] z-[10]">
           <div className="text-[18px]">All Products : {filteredAndSortedData.length}</div>
           <div className="flex gap-[20px] text-[14px]">
             <button className=" relative font-semibold border border-gray-400 py-2 px-4 rounded-[5px] " onClick={() => setIsOpen(!isOpen)}> {selectedOptions ? selectedOptions : "Sort By"}
@@ -254,7 +254,7 @@ function Homepage() {
         </div>
 
         <div className='flex flex-col  text-center w-[100%]'>
-          <div className='w-[100%] py-[10px] bg-[#71c3e3] rounded-[5px] text-[18px] flex flex-row gap-[10px]'>
+          <div className='w-[100%] py-[10px] bg-[#71c3e3] rounded-[5px] sticky top-[71px] z-[10] text-[18px] flex flex-row gap-[10px]'>
             <p className='w-[5%] font-[600]'>Sr No</p>
             <p className='w-[32%] font-[600]'>Product Name</p>
             <p className='w-[8%] font-[600]'>Quantity</p>
