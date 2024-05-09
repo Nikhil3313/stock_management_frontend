@@ -54,7 +54,7 @@ function Homepage() {
 
   const getData = () => {
     axios
-      .get("https://freedygoservices.in/api/stock")
+      .get("https://freedygoservices.in/api/ld")
       .then((res) => {
         // console.log(12122, res.data)
         setModifiedData(res.data)
@@ -95,7 +95,7 @@ function Homepage() {
 
   const ModifyStock = (data) => {
 
-    axios.post("https://freedygoservices.in/api/stock/add", data).then((res) => {
+    axios.post("https://freedygoservices.in/api/ld/add", data).then((res) => {
       console.log("res", res.data.data)
       setPopup(!popup)
       setData(
@@ -151,7 +151,7 @@ function Homepage() {
   };
 
   const deleteProduct = (productId) => {
-    axios.delete(`https://freedygoservices.in/api/stock/${productId}`)
+    axios.delete(`https://freedygoservices.in/api/ld/${productId}`)
       .then((res) => {
         console.log("Product deleted successfully:", res.data);
         getData();
