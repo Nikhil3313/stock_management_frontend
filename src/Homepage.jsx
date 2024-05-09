@@ -42,9 +42,9 @@ function Homepage() {
 
   useEffect(() => {
     axios
-      .get("https://freedygoservices.in/api/products/getAll")
+      .get("https://freedygoservices.in/api/product/getAll")
       .then((res) => {
-        setuserData(res.data);
+        setuserData(res.data.data);
       })
       .catch((err) => {
         console.log(err)
